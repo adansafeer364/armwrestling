@@ -10,7 +10,7 @@ import RefereePanel from './RefereePanel';
 import Link from 'next/link';
 import { LogOut } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'; 
 
 export default async function RefereeDashboard() {
   const session = await getServerSession(authOptions);
