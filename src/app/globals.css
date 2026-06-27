@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* Define class-based dark mode variant in Tailwind CSS v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-primary: #f97316;    /* Vibrant Orange */
+  --color-brand-secondary: #dc2626;  /* Crimson Red */
+  --color-brand-accent: #eab308;     /* Gold Gold */
+  
+  --color-light-bg: #f8fafc;
+  --color-light-card: #ffffff;
+  --color-light-text-main: #0f172a;
+  --color-light-text-muted: #475569;
+  
+  --color-dark-bg: #030712;          /* Rich space black */
+  --color-dark-card: #0f172a;        /* Sleek slate blue/gray */
+  --color-dark-text-main: #f8fafc;
+  --color-dark-text-muted: #94a3b8;
+}
+
+/* Base resets & theme styles */
+:root {
+  background-color: var(--color-light-bg);
+  color: var(--color-light-text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+:root.dark {
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text-main);
+}
+
+body {
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Custom Scrollbar for premium look */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+/* Micro-animations and glow utilities */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+}
+
+.clip-bracket {
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+}
+
+/* Splash intro: glowing gradient title with a light sweep */
+.splash-title {
+  background: linear-gradient(110deg, #ffffff 0%, #ffd9a8 25%, #f97316 45%, #ffffff 55%, #ffd9a8 75%, #f97316 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 24px rgba(249, 115, 22, 0.45));
+  animation: splash-sweep 2.4s ease-in-out 1.05s both;
+}
+@keyframes splash-sweep {
+  0% { background-position: 120% 0; }
+  100% { background-position: -40% 0; }
+}

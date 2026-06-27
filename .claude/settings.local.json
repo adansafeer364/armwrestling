@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat)",
+      "Bash(node /tmp/dbcheck.mjs)",
+      "Bash(cp /tmp/dbcheck.mjs ./dbcheck.mjs)",
+      "Bash(node dbcheck.mjs)",
+      "Bash(npm install *)",
+      "Bash(echo \"exit:$?\")",
+      "Read(//tmp/**)",
+      "Bash(node node_modules/typescript/bin/tsc --noEmit)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node scripts/seed.mjs)",
+      "Bash(node ./_livesetup.mjs)"
+    ]
+  }
+}
