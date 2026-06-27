@@ -32,8 +32,24 @@
   color: var(--color-dark-text-main);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
+  margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Custom Scrollbar for premium look */

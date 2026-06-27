@@ -26,7 +26,7 @@ const Footer = dynamic(() => import('../components/Footer'));
 
 export default function Home() {
   return (
-    <div className="relative w-full min-h-screen bg-light-bg dark:bg-dark-bg text-light-text-main dark:text-dark-text-main transition-colors duration-300">
+    <div className="relative w-full min-h-screen overflow-x-hidden bg-light-bg dark:bg-dark-bg text-light-text-main dark:text-dark-text-main transition-colors duration-300">
       {/* First-open welcome animation */}
       <IntroSplash />
 
