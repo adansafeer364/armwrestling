@@ -25,11 +25,18 @@
   color: var(--color-light-text-main);
   transition: background-color 0.3s ease, color 0.3s ease;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 :root.dark {
   background-color: var(--color-dark-bg);
   color: var(--color-dark-text-main);
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
