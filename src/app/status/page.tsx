@@ -76,7 +76,7 @@ export default function StatusPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="ARM-2026-0001"
-            className="flex-1 rounded-md border border-gray-300 p-2.5 focus:border-indigo-500 focus:ring-indigo-500"
+            className="flex-1 rounded-md border border-gray-300 p-2.5 focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400 "
           />
           <button
             type="submit"

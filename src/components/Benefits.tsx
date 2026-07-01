@@ -6,11 +6,6 @@ import { Tv, ShieldAlert, Award, HeartPulse, Sparkles, TrendingUp } from 'lucide
 
 const BENEFITS = [
   {
-    icon: Tv,
-    title: 'Global Broadcast Coverage',
-    desc: 'Every matchup on the main table is broadcasted in HD internationally with real-time analytics.'
-  },
-  {
     icon: ShieldAlert,
     title: 'Certified Anti-Doping',
     desc: 'Fair play is guaranteed. Randomized anti-doping tests are administered by official agencies.'

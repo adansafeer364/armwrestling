@@ -5,10 +5,9 @@ import { motion } from 'framer-motion';
 import { Trophy, Globe, ShieldCheck, Users } from 'lucide-react';
 
 const STATS = [
-  { icon: Trophy, label: 'Grand Prize Pool', value: 'Rs 150,000+' },
+  { icon: Trophy, label: 'Grand Prize Pool', value: 'Rs 15,000+' },
   { icon: Users, label: 'Elite Pullers', value: '400+' },
-  { icon: Globe, label: 'Nations Represented', value: '30+' },
-  { icon: ShieldCheck, label: 'Certified Referees', value: '16+' }
+  { icon: ShieldCheck, label: 'Certified Referees', value: '5+' }
 ];
 
 export default function About() {

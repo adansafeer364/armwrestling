@@ -92,7 +92,7 @@ function RegisterForm() {
   return (
     <div dir={dir} className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="px-6 py-8">
+        <div className="px-6 py-8 text-gray-900">
           <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-2">{t('reg_title')}</h2>
           {lockedComp ? (
             <p className="text-center text-indigo-600 font-medium mb-6">
