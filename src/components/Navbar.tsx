@@ -3,15 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../app/providers';
 import { useI18n } from '../app/i18n';
-import { Sun, Moon, Menu, X, Trophy } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import BrandLogo from './BrandLogo';
 
 const NAV_LINKS = [
   { href: '#about', key: 'nav_about' },
-  { href: '#benefits', key: 'nav_benefits' },
   { href: '#divisions', key: 'nav_divisions' },
-  { href: '#prizes', key: 'nav_prizes' },
-  { href: '#schedule', key: 'nav_schedule' },
   { href: '#gallery', key: 'nav_gallery' },
   { href: '#faq', key: 'nav_faq' },
   { href: '#contact', key: 'nav_contact' }
@@ -40,11 +38,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center space-x-2 group">
-            <Trophy className="h-8 w-8 text-brand-primary group-hover:rotate-12 transition-transform duration-300" />
-            <span data-no-translate className="font-extrabold text-xl tracking-wider text-light-text-main dark:text-dark-text-main">
-              TITAN<span className="text-brand-primary">CLASH</span>
-            </span>
+          <a href="#" className="flex items-center group">
+            <BrandLogo compact className="group-hover:scale-[1.02] transition-transform duration-300" />
           </a>
 
           {/* Desktop Nav Links */}

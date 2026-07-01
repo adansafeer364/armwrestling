@@ -7,7 +7,7 @@ import { Plus, Minus } from 'lucide-react';
 const FAQS = [
   {
     q: 'How do I register to take part?',
-    a: 'On the homepage, choose the competition that is open for registration and tap “Register for this Competition”. Fill the form — full name, father’s name, phone, email, age, city, club (optional), your weight, and your competing hand (Right, Left or Both). Upload your photo and a screenshot of your fee payment, and enter the account number and account-holder name you paid from. Submit, and you will get a Registration ID like ARM-2026-0001. You can also register over WhatsApp at 0327 8625085.'
+    a: 'On the homepage, choose the competition that is open for registration and tap “Register for this Competition”. Fill the form — full name, father’s name, phone, email, age, city, club (optional), your weight, and your competing hand (Right, Left or Both). Upload your photo and a screenshot of your fee payment, and enter the account number and account-holder name you paid from. Submit, and you will get a Registration ID like ARM-2026-0001. You can also register over WhatsApp at 03397811755.'
   },
   {
     q: 'How do I pay the entry fee?',

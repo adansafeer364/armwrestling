@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trophy, Mail, Send, Check } from 'lucide-react';
+import { Send, Check } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -24,11 +25,8 @@ export default function Footer() {
           
           {/* Logo & Desc */}
           <div className="md:col-span-4 space-y-4">
-            <a href="#" className="flex items-center space-x-2">
-              <Trophy className="h-8 w-8 text-brand-primary" />
-              <span className="font-extrabold text-xl tracking-wider text-white">
-                TITAN<span className="text-brand-primary">CLASH</span>
-              </span>
+            <a href="#" className="flex items-center">
+              <BrandLogo compact animated={false} className="text-white" />
             </a>
             <p className="text-sm text-gray-500 leading-relaxed">
               The premier professional armwrestling organization hosting world-class combat sports events. Built on fair play, absolute power, and technical mastery.

@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, Swords } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 export default function Hero() {
   const containerVariants: any = {
@@ -54,6 +55,17 @@ export default function Hero() {
           >
             <Swords className="h-4 w-4" />
             <span>The Ultimate Armwrestling Arena</span>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="w-full flex justify-center">
+            <BrandLogo
+              animated={true}
+              showText
+              kicker="Professional Armwrestling"
+              title="Championship 2026"
+              subtitle="Powered by prestige and precision"
+              className="justify-center"
+            />
           </motion.div>
 
           {/* Main Title */}

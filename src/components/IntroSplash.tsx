@@ -10,8 +10,7 @@ export default function IntroSplash() {
   // Change this text anytime:
   return (
     <SplashScreen
-      text="Welcome to Titan Clash"
-      kicker="The Ultimate Armwrestling Arena"
+      text="Welcome to Arm Fights"
       onDone={() => setShow(false)}
     />
   );

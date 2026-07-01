@@ -11,11 +11,8 @@ import CountdownTimer from '../components/CountdownTimer';
 // Below-the-fold sections are code-split so the initial page payload is smaller
 // and the hero renders/interactive sooner. They still server-render for SEO.
 const About = dynamic(() => import('../components/About'));
-const Benefits = dynamic(() => import('../components/Benefits'));
 const WeightCategories = dynamic(() => import('../components/WeightCategories'));
-const PrizePool = dynamic(() => import('../components/PrizePool'));
 const TournamentFormat = dynamic(() => import('../components/TournamentFormat'));
-const Schedule = dynamic(() => import('../components/Schedule'));
 const Gallery = dynamic(() => import('../components/Gallery'));
 const Sponsors = dynamic(() => import('../components/Sponsors'));
 const Testimonials = dynamic(() => import('../components/Testimonials'));
@@ -46,20 +43,11 @@ export default function Home() {
         {/* About Event */}
         <About />
 
-        {/* Benefits for Competitors */}
-        <Benefits />
-
         {/* Weight Brackets & Divisions */}
         <WeightCategories />
 
-        {/* Cash Prize Pool Distribution */}
-        <PrizePool />
-
         {/* Tournament Format Rules */}
         <TournamentFormat />
-
-        {/* Schedule of Events */}
-        <Schedule />
 
         {/* Gallery */}
         <Gallery />

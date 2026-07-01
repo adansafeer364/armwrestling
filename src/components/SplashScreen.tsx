@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import BrandLogo from './BrandLogo';
 
 interface SplashProps {
   /** Main line. You can change this text anytime. */
@@ -15,16 +16,16 @@ interface SplashProps {
 const SPARKS = 14;
 
 export default function SplashScreen({
-  text = 'Welcome to Titan Clash',
-  kicker = 'TITAN CLASH',
-  duration = 2900,
+  text = 'Welcome to Arm Fights',
+  kicker = '',
+  duration = 3600,
   onDone,
 }: SplashProps) {
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const tFade = setTimeout(() => setFading(true), Math.max(0, duration - 600));
+    const tFade = setTimeout(() => setFading(true), Math.max(0, duration - 900));
     const tEnd = setTimeout(() => { setVisible(false); onDone?.(); }, duration);
     return () => { clearTimeout(tFade); clearTimeout(tEnd); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,18 +90,18 @@ export default function SplashScreen({
       {/* text */}
       <div className="relative z-10 text-center px-6 select-none" data-no-translate>
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-brand-primary mb-4"
+          initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 0.9, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 flex justify-center"
         >
-          {kicker}
+          <BrandLogo animated={false} />
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, scale: 0.86, filter: 'blur(12px)' }}
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.9, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="splash-title text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight"
         >
           {text}
@@ -109,7 +110,7 @@ export default function SplashScreen({
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 1.5, ease: 'easeOut' }}
+          transition={{ duration: 0.7, delay: 1.6, ease: 'easeOut' }}
           className="mx-auto mt-6 h-[2px] w-40 bg-gradient-to-r from-transparent via-brand-primary to-transparent origin-center"
         />
       </div>

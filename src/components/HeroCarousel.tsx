@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin, Swords } from 'lucide-react';
 import { formatPKR } from '@/lib/format';
 import { useI18n } from '@/app/i18n';
+import BrandLogo from './BrandLogo';
 
 interface Slide {
   _id: string;
@@ -47,6 +48,16 @@ export default function HeroCarousel() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('/images/hero-bg.jpg')` }} />
         <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/75 to-transparent" />
         <div className="relative z-10 text-center px-4">
+          <div className="flex justify-center">
+            <BrandLogo
+              animated={true}
+              showText
+              kicker="Professional Armwrestling"
+              title="Championship 2026"
+              subtitle="Powered by prestige and precision"
+              className="justify-center"
+            />
+          </div>
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight text-white uppercase">
             TITAN CLASH <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent">2026</span>
           </h1>
