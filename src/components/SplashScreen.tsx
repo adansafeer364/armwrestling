@@ -51,14 +51,14 @@ export default function SplashScreen({
         initial={{ x: '-55vw', opacity: 0, scaleX: 0.4 }}
         animate={{ x: '-1px', opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-1/2 left-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-right"
+        className="absolute top-1/2 left-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-right mb-4"
         style={{ background: 'linear-gradient(90deg, transparent, #f97316 70%, #fff)' }}
       />
       <motion.div
         initial={{ x: '55vw', opacity: 0, scaleX: 0.4 }}
         animate={{ x: '1px', opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-1/2 right-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-left"
+        className="absolute top-1/2 right-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-left mb-4"
         style={{ background: 'linear-gradient(270deg, transparent, #f97316 70%, #fff)' }}
       />
 
