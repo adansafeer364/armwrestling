@@ -27,7 +27,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-dark-bg">
+    <section className="relative w-full flex items-center justify-center overflow-hidden bg-dark-bg pt-20 min-h-screen">
       {/* Background Image with Dark Overlays */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -41,7 +41,7 @@ export default function Hero() {
       {/* Floating Sparkles effect */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-primary/10 via-transparent to-transparent"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           variants={containerVariants}
           initial="hidden"

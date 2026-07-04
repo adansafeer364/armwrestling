@@ -92,3 +92,23 @@ body {
   0% { background-position: 120% 0; }
   100% { background-position: -40% 0; }
 }
+
+/* Form elements: ensure input text is visible in both themes */
+input, textarea, select, button, .prose input, .prose textarea {
+  color: var(--color-light-text-main);
+  caret-color: var(--color-brand-primary);
+}
+
+input::placeholder, textarea::placeholder {
+  color: currentColor;
+  opacity: 0.6;
+}
+
+
+:root.dark input, :root.dark textarea, :root.dark select, :root.dark button {
+  color: var(--color-dark-text-main);
+}
+
+:root.dark input::placeholder, :root.dark textarea::placeholder {
+  opacity: 0.65;
+}

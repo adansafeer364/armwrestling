@@ -27,11 +27,11 @@ export default function Contact() {
             <div className="space-y-4">
               <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm font-semibold text-light-text-main dark:text-dark-text-main hover:text-brand-primary">
                 <MessageCircle className="h-5 w-5 text-[#25D366] flex-shrink-0" />
-                <span>WhatsApp: 0327 8625085</span>
+                <span>WhatsApp: 03397811755</span>
               </a>
               <div className="flex items-center gap-3 text-sm font-semibold text-light-text-main dark:text-dark-text-main">
                 <Phone className="h-5 w-5 text-brand-primary flex-shrink-0" />
-                <span>Call: 0327 8625085</span>
+                <span>Call: 03439200329 / 03124165364</span>
               </div>
               <div className="flex items-start gap-3 text-sm font-semibold text-light-text-main dark:text-dark-text-main">
                 <MapPin className="h-5 w-5 text-brand-primary mt-0.5 flex-shrink-0" />

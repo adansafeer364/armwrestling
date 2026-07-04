@@ -32,21 +32,21 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-light-card dark:bg-dark-card p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 text-light-text-main dark:text-dark-text-main">
       {error && <div className="text-red-500 bg-red-50 p-3 rounded text-sm">{error}</div>}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700">Name (Title)</label>
-          <input required type="text" name="title" defaultValue={tournament?.title} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="text" name="title" defaultValue={tournament?.title} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Location (short label)</label>
-          <input required type="text" name="location" defaultValue={tournament?.location} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="text" name="location" defaultValue={tournament?.location} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">Map Coordinates — Latitude, Longitude</label>
-          <input type="text" name="mapAddress" defaultValue={tournament?.mapAddress} placeholder="e.g. 34.3360, 73.1968" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input type="text" name="mapAddress" defaultValue={tournament?.mapAddress} placeholder="e.g. 34.3360, 73.1968" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
           <p className="text-xs text-gray-500 mt-1">
             Paste the exact <span className="font-semibold">latitude, longitude</span> of the venue (right-click the spot in Google Maps → copy the numbers).
             The homepage map will drop a pin there and the “Get Directions” button routes to it. Leave empty to hide the map.
@@ -54,23 +54,23 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Start Date</label>
-          <input required type="datetime-local" name="startDate" defaultValue={formatDate(tournament?.startDate)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="datetime-local" name="startDate" defaultValue={formatDate(tournament?.startDate)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">End Date</label>
-          <input required type="datetime-local" name="endDate" defaultValue={formatDate(tournament?.endDate)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="datetime-local" name="endDate" defaultValue={formatDate(tournament?.endDate)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Registration Deadline</label>
-          <input required type="datetime-local" name="registrationDeadline" defaultValue={formatDate(tournament?.registrationDeadline)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="datetime-local" name="registrationDeadline" defaultValue={formatDate(tournament?.registrationDeadline)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Prize Pool (Rs)</label>
-          <input required type="number" name="prizePool" defaultValue={tournament?.prizePool || 0} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" />
+          <input required type="number" name="prizePool" defaultValue={tournament?.prizePool || 0} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Status</label>
-          <select name="status" defaultValue={tournament?.status || 'DRAFT'} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border bg-white">
+          <select name="status" defaultValue={tournament?.status || 'DRAFT'} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border bg-white text-light-text-main dark:text-dark-text-main">
             <option value="DRAFT">Draft</option>
             <option value="REGISTRATION_OPEN">Registration Open</option>
             <option value="REGISTRATION_CLOSED">Registration Closed</option>
@@ -86,7 +86,7 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
         </div>
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">Description</label>
-          <textarea name="description" defaultValue={tournament?.description} rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"></textarea>
+          <textarea name="description" defaultValue={tournament?.description} rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main"></textarea>
         </div>
       </div>
       <div className="flex justify-end">

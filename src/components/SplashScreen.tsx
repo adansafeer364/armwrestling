@@ -51,14 +51,14 @@ export default function SplashScreen({
         initial={{ x: '-55vw', opacity: 0, scaleX: 0.4 }}
         animate={{ x: '-1px', opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-1/2 left-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-right mb-4"
+        className="absolute top-[56%] sm:top-1/2 left-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-right  z-0"
         style={{ background: 'linear-gradient(90deg, transparent, #f97316 70%, #fff)' }}
       />
       <motion.div
         initial={{ x: '55vw', opacity: 0, scaleX: 0.4 }}
         animate={{ x: '1px', opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-1/2 right-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-left mb-4"
+        className="absolute top-[56%] sm:top-1/2 right-1/2 h-[3px] w-[42vw] -translate-y-1/2 origin-left  z-0"
         style={{ background: 'linear-gradient(270deg, transparent, #f97316 70%, #fff)' }}
       />
 
@@ -88,31 +88,33 @@ export default function SplashScreen({
       })}
 
       {/* text */}
-      <div className="relative z-10 text-center px-6 select-none" data-no-translate>
+      <div className="relative z-10 flex flex-col items-center text-center px-6 py-10 max-w-[92vw] select-none sm:px-8 sm:py-12 md:px-12 md:py-16" data-no-translate>
         <motion.div
           initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)' }}
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6 flex justify-center"
+          className="mb-6 flex justify-center sm:mb-8 md:mb-10"
         >
           <BrandLogo animated={false} />
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.86, filter: 'blur(12px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="splash-title text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight"
-        >
-          {text}
-        </motion.h1>
+        <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-5">
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.86, filter: 'blur(12px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="splash-title text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.04]"
+          >
+            {text}
+          </motion.h1>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 1.6, ease: 'easeOut' }}
-          className="mx-auto mt-6 h-[2px] w-40 bg-gradient-to-r from-transparent via-brand-primary to-transparent origin-center"
-        />
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.7, delay: 1.6, ease: 'easeOut' }}
+            className="mx-auto h-[2px] w-40 sm:w-44 md:w-48 bg-gradient-to-r from-transparent via-brand-primary to-transparent origin-center"
+          />
+        </div>
       </div>
     </motion.div>
   );

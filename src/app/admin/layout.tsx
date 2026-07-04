@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import {
   LayoutDashboard,
   CreditCard,
@@ -15,6 +16,9 @@ import {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+  const role = session?.user?.role || '';
+  const isAdmin = typeof role === 'string' && /admin/i.test(role);
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -26,9 +30,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const SidebarContent = (
     <div className="flex flex-col h-full">
-      <div className="h-16 flex items-center justify-between px-4 border-b">
-        <h1 className="text-xl font-bold text-gray-800">Admin Panel</h1>
-        <button className="lg:hidden text-gray-500" onClick={() => setOpen(false)} aria-label="Close menu">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800">
+        <h1 className="text-xl font-bold text-light-text-main dark:text-dark-text-main">Admin Panel</h1>
+        <button className="lg:hidden text-light-text-muted dark:text-dark-text-muted" onClick={() => setOpen(false)} aria-label="Close menu">
           <X className="h-6 w-6" />
         </button>
       </div>
@@ -40,17 +44,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               key={item.name}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+              className="flex items-center px-6 py-3 text-light-text-main dark:text-dark-text-main hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-indigo-500/10 dark:hover:text-indigo-300 transition-colors"
             >
-              <Icon className="h-5 w-5 mr-3 flex-shrink-0" />
+              <Icon className="h-5 w-5 mr-3 flex-shrink-0 text-light-text-muted dark:text-dark-text-muted" />
               <span className="font-medium">{item.name}</span>
             </Link>
           );
         })}
       </nav>
-      <div className="border-t p-4">
-        <Link href="/api/auth/signout" className="flex items-center text-gray-700 hover:text-red-600 transition-colors w-full">
-          <LogOut className="h-5 w-5 mr-3" />
+      <div className="border-t border-gray-200 dark:border-gray-800 p-4">
+        <Link href="/api/auth/signout" className="flex items-center text-light-text-main dark:text-dark-text-main hover:text-red-600 transition-colors w-full">
+          <LogOut className="h-5 w-5 mr-3 text-light-text-muted dark:text-dark-text-muted" />
           <span className="font-medium">Sign Out</span>
         </Link>
       </div>
@@ -58,14 +62,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 lg:flex">
+    <div className="min-h-screen bg-light-bg dark:bg-dark-bg lg:flex">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block w-64 bg-white shadow-lg flex-shrink-0">{SidebarContent}</aside>
+      <aside className="hidden lg:block w-64 bg-light-card dark:bg-dark-card shadow-lg flex-shrink-0">{SidebarContent}</aside>
 
       {/* Mobile drawer + overlay */}
       {open && <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setOpen(false)} />}
       <aside
-        className={`fixed inset-y-0 left-0 w-72 max-w-[80%] bg-white shadow-xl z-50 lg:hidden transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 w-72 max-w-[80%] bg-light-card dark:bg-dark-card shadow-xl z-50 lg:hidden transform transition-transform duration-300 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -75,22 +79,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
-        <header className="h-16 bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 z-10 sticky top-0">
+        <header className="h-16 bg-light-card dark:bg-dark-card shadow-sm flex items-center justify-between px-4 sm:px-6 z-10 sticky top-0">
           <div className="flex items-center gap-3 min-w-0">
-            <button className="lg:hidden text-gray-700 flex-shrink-0" onClick={() => setOpen(true)} aria-label="Open menu">
+            <button className="lg:hidden text-light-text-main dark:text-dark-text-main flex-shrink-0" onClick={() => setOpen(true)} aria-label="Open menu">
               <Menu className="h-6 w-6" />
             </button>
-            <div className="text-base sm:text-xl font-semibold text-gray-800 truncate">
+            <div className="text-base sm:text-xl font-semibold text-light-text-main dark:text-dark-text-main truncate">
               Arm Wrestling Management
             </div>
           </div>
-          <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
-            A
+          <div className="flex items-center gap-3">
+            {isAdmin && (
+              <Link href="/live" className="px-3 py-1.5 rounded-full font-bold text-sm border border-red-500/60 text-red-500 hover:bg-red-500/10 transition-all">
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse inline-block mr-2" />
+                Watch Live
+              </Link>
+            )}
+
+            <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+              A
+            </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 sm:p-6">{children}</main>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg dark:bg-dark-bg p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );

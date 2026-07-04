@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { SessionProvider } from 'next-auth/react';
 
 type Theme = 'light' | 'dark';
 
@@ -38,7 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <SessionProvider>{children}</SessionProvider>
     </ThemeContext.Provider>
   );
 }

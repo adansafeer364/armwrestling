@@ -40,6 +40,9 @@ export default function Home() {
         {/* Countdown Timer overlaying hero bottom */}
         <CountdownTimer />
 
+         {/* Venue maps — one per tournament, set by admin */}
+        <VenueMaps />
+
         {/* About Event */}
         <About />
 
@@ -60,9 +63,6 @@ export default function Home() {
 
         {/* FAQ */}
         <FAQ />
-
-        {/* Venue maps — one per tournament, set by admin */}
-        <VenueMaps />
 
         {/* Contact and Registration form */}
         <Contact />

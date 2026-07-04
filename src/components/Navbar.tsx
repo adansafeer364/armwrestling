@@ -5,6 +5,7 @@ import { useTheme } from '../app/providers';
 import { useI18n } from '../app/i18n';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession } from 'next-auth/react';
 import BrandLogo from './BrandLogo';
 
 const NAV_LINKS = [
@@ -20,6 +21,7 @@ export default function Navbar() {
   const { t, lang, toggle } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,13 +79,6 @@ export default function Navbar() {
             >
               {t('check_status')}
             </a>
-            <a
-              href="/live"
-              className="px-4 py-2.5 rounded-full font-bold text-sm border border-red-500/60 text-red-500 hover:bg-red-500/10 transition-all duration-300 flex items-center gap-1.5"
-            >
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              {t('watch_live')}
-            </a>
           </div>
 
           {/* Mobile Menu Actions */}
@@ -140,13 +135,6 @@ export default function Navbar() {
                 className="block px-3 py-3.5 rounded-lg text-base font-semibold text-light-text-muted hover:text-brand-primary hover:bg-gray-50 dark:text-dark-text-muted dark:hover:text-brand-primary dark:hover:bg-gray-900 transition-all"
               >
                 {t('check_status')}
-              </a>
-              <a
-                href="/live"
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-3.5 rounded-lg text-base font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
-              >
-                {t('watch_live')}
               </a>
             </div>
           </motion.div>

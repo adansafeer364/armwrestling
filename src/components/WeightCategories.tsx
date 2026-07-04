@@ -4,8 +4,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Flame } from 'lucide-react';
 
-// Men's weight classes — 5 kg steps from −55 kg up to −100 kg, then 100 kg+.
-const STEPS = [55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+// Men's weight classes — updated standard: −50, −60, −70, −80, −90, −100, then 100 kg+
+const STEPS = [50, 60, 70, 80, 90, 100];
 const CLASSES = [
   ...STEPS.map((kg, i) => ({
     name: `−${kg} kg`,

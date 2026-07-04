@@ -1,77 +1,80 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin, Swords } from 'lucide-react';
-import { formatPKR } from '@/lib/format';
-import { useI18n } from '@/app/i18n';
+import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 import BrandLogo from './BrandLogo';
+import { formatPKR } from '@/lib/format';
 
 interface Slide {
   _id: string;
   title: string;
   description?: string;
   bannerImage?: string;
-  location: string;
-  startDate: string;
+  location?: string;
+  startDate?: string;
   prizePool?: number;
 }
 
-export default function HeroCarousel() {
-  const { t } = useI18n();
-  const [slides, setSlides] = useState<Slide[]>([]);
-  const [index, setIndex] = useState(0);
+const DEFAULT_SLIDES: Slide[] = [
+  {
+    _id: 's1',
+    title: 'Titan Clash 2026',
+    description: 'Two pullers. One table. Absolute domination.',
+    bannerImage: '/images/hero-bg.jpg',
+    location: 'Mansehra Sports Arena',
+    startDate: new Date().toISOString(),
+    prizePool: 150000,
+  },
+];
+
+export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] }) {
+  const [slidesState, setSlidesState] = useState<Slide[]>(propSlides && propSlides.length ? propSlides : []);
   const [loaded, setLoaded] = useState(false);
+  const slides = slidesState.length ? slidesState : DEFAULT_SLIDES;
+  const count = slides.length;
+  const [index, setIndex] = useState(0);
+  const [showSlideText, setShowSlideText] = useState(true);
 
   useEffect(() => {
+    // show text when slide changes, then hide after 5s
+    setShowSlideText(true);
+    const t = setTimeout(() => setShowSlideText(false), 5000);
+    return () => clearTimeout(t);
+  }, [index]);
+
+  useEffect(() => {
+    // auto-advance every 8s
+    const id = setInterval(() => setIndex((s) => (s + 1) % count), 8000);
+    return () => clearInterval(id);
+  }, [count]);
+
+  useEffect(() => {
+    // If no slides were provided via props, fetch competitions from API
+    if (propSlides && propSlides.length) {
+      setLoaded(true);
+      return;
+    }
+
     fetch('/api/competitions')
       .then((r) => r.json())
-      .then((d) => setSlides(d.competitions || []))
-      .catch(() => setSlides([]))
+      .then((d) => {
+        const comps = d?.competitions || [];
+        if (comps && comps.length) setSlidesState(comps);
+      })
+      .catch(() => {})
       .finally(() => setLoaded(true));
-  }, []);
+  }, [propSlides]);
 
-  const count = slides.length;
-  const next = useCallback(() => setIndex((i) => (count ? (i + 1) % count : 0)), [count]);
-  const prev = useCallback(() => setIndex((i) => (count ? (i - 1 + count) % count : 0)), [count]);
-
-  useEffect(() => {
-    if (count <= 1) return;
-    const t = setInterval(next, 6000);
-    return () => clearInterval(t);
-  }, [count, next]);
-
-  // Fallback when no competitions are open for registration.
-  if (loaded && count === 0) {
-    return (
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-dark-bg">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('/images/hero-bg.jpg')` }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/75 to-transparent" />
-        <div className="relative z-10 text-center px-4">
-          <div className="flex justify-center">
-            <BrandLogo
-              animated={true}
-              showText
-              kicker="Professional Armwrestling"
-              title="Championship 2026"
-              subtitle="Powered by prestige and precision"
-              className="justify-center"
-            />
-          </div>
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight text-white uppercase">
-            TITAN CLASH <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent">2026</span>
-          </h1>
-          <p className="mt-4 text-gray-300 text-lg">{t('no_comps')}</p>
-        </div>
-      </section>
-    );
-  }
+  const prev = () => setIndex((i) => (i - 1 + count) % count);
+  const next = () => setIndex((i) => (i + 1) % count);
 
   const slide = slides[index];
+  const isBrochure = !!slide?.bannerImage && slide.bannerImage.toLowerCase().includes('brochure');
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-dark-bg">
-      {/* Slides */}
+    <section className="relative w-full overflow-hidden bg-dark-bg pt-20 min-h-screen">
       {slides.map((s, i) => (
         <div
           key={s._id}
@@ -83,70 +86,85 @@ export default function HeroCarousel() {
             fill
             priority={i === 0}
             sizes="100vw"
-            quality={70}
-            className="object-cover"
+            className="object-contain object-center sm:object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/80 to-dark-bg/40" />
+
+          {/* overlay: lighten when brochure to keep text readable */}
+          <div
+            aria-hidden
+            className={`absolute inset-0 ${isBrochure ? 'bg-black/18' : 'bg-gradient-to-t from-dark-bg via-dark-bg/45 to-dark-bg/18'}`}
+          />
+
+          <div className="relative z-10 flex items-center justify-center h-full px-4">
+            <div className="max-w-4xl w-full text-center">
+              <div className="flex justify-center mb-6">
+                <BrandLogo animated showText className="justify-center" />
+              </div>
+
+              <div className="relative inline-block">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showSlideText ? 0.6 : 0 }}
+                  transition={{ duration: 0.45 }}
+                  className="absolute -inset-2 rounded-xl bg-black/60 backdrop-blur-sm"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={showSlideText ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+                  transition={{ duration: 0.45 }}
+                  className="relative z-10 px-6 py-6 sm:px-8 sm:py-8 rounded-xl mx-auto text-center text-white"
+                >
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight uppercase">
+                    {s.title}
+                  </h1>
+
+                  {s.description && <p className="mt-4 max-w-2xl text-base sm:text-lg mx-auto">{s.description}</p>}
+
+                  <div className="mt-6 flex flex-wrap items-center justify-center gap-4 font-black text-sm">
+                    {s.location && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="h-4 w-4 text-brand-primary" /> {s.location}
+                      </span>
+                    )}
+                    {s.startDate && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-4 w-4 text-brand-primary" /> {new Date(s.startDate).toLocaleDateString()}
+                      </span>
+                    )}
+                    {s.prizePool ? (
+                      <span className="inline-flex items-center gap-1.5 text-green-400 font-semibold">Prize: {formatPKR(s.prizePool)}</span>
+                    ) : null}
+                  </div>
+
+                  {/* Register CTA removed from timed block so it stays visible */}
+                </motion.div>
+              </div>
+            </div>
+          </div>
+          {/* Persistent Register CTA (always visible) */}
+          <div className="absolute bottom-40 left-1/2 -translate-x-1/2 z-30">
+            <a
+              href={`/register?tournament=${s._id}`}
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full font-bold text-base bg-brand-primary hover:bg-brand-primary/90 text-white shadow-lg transition-all duration-300"
+            >
+              <span>Register</span>
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          </div>
         </div>
       ))}
-
-      {/* Content for the active slide */}
-      {slide && (
-        <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
-          <div className="flex items-center space-x-2 px-4 py-1.5 rounded-full border border-brand-primary/30 bg-brand-primary/10 text-brand-primary text-xs sm:text-sm font-bold tracking-widest uppercase mb-6">
-            <Swords className="h-4 w-4" />
-            <span>{t('now_open')}</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white uppercase max-w-4xl">
-            {slide.title}
-          </h1>
-
-          {slide.description && (
-            <p className="mt-4 max-w-2xl text-base sm:text-lg text-gray-300">{slide.description}</p>
-          )}
-
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-gray-200 text-sm">
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-4 w-4 text-brand-primary" /> {slide.location}
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Calendar className="h-4 w-4 text-brand-primary" /> {new Date(slide.startDate).toLocaleDateString()}
-            </span>
-            {slide.prizePool ? (
-              <span className="inline-flex items-center gap-1.5 text-green-400 font-semibold">
-                {t('prize_pool')}: {formatPKR(slide.prizePool)}
-              </span>
-            ) : null}
-          </div>
-
-          <a
-            href={`/register?tournament=${slide._id}`}
-            className="mt-8 inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full font-bold text-base bg-brand-primary hover:bg-brand-primary/90 text-white shadow-lg glow-primary transition-all duration-300 transform hover:-translate-y-0.5"
-          >
-            <span>{t('register_for_this')}</span>
-            <ArrowRight className="h-5 w-5" />
-          </a>
-        </div>
-      )}
 
       {/* Controls */}
       {count > 1 && (
         <>
-          <button
-            onClick={prev}
-            aria-label="Previous"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
-          >
+          <button onClick={prev} aria-label="Previous" className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm">
             <ChevronLeft className="h-6 w-6" />
           </button>
-          <button
-            onClick={next}
-            aria-label="Next"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
-          >
+          <button onClick={next} aria-label="Next" className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm">
             <ChevronRight className="h-6 w-6" />
           </button>
+
           <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex gap-2">
             {slides.map((s, i) => (
               <button

@@ -96,11 +96,11 @@ export function CategoryActions({ tournamentId }: { tournamentId: string }) {
           <form
             onClick={(e) => e.stopPropagation()}
             onSubmit={handleAdd}
-            className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 text-left"
+            className="bg-light-card dark:bg-dark-card rounded-xl shadow-2xl w-full max-w-md p-6 text-left text-light-text-main dark:text-dark-text-main"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-900">Add Category</h3>
-              <button type="button" onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-700">
+              <h3 className="text-lg font-bold text-light-text-main dark:text-dark-text-main">Add Category</h3>
+              <button type="button" onClick={() => setOpen(false)} className="text-light-text-muted dark:text-dark-text-muted hover:text-light-text-main dark:hover:text-dark-text-main">
                 <X size={20} />
               </button>
             </div>
@@ -113,7 +113,7 @@ export function CategoryActions({ tournamentId }: { tournamentId: string }) {
                 <input
                   required value={form.name} onChange={(e) => set('name', e.target.value)}
                   placeholder="e.g. −75kg"
-                  className="mt-1 w-full p-2 border border-gray-300 rounded focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 w-full p-2 border border-gray-300 rounded focus:border-indigo-500 focus:ring-indigo-500 text-light-text-main dark:text-dark-text-main"
                 />
               </div>
 
@@ -121,19 +121,19 @@ export function CategoryActions({ tournamentId }: { tournamentId: string }) {
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Min weight (kg)</label>
                   <input required type="number" step="0.1" value={form.minWeightKg} onChange={(e) => set('minWeightKg', e.target.value)}
-                    placeholder="70" className="mt-1 w-full p-2 border border-gray-300 rounded" />
+                    placeholder="70" className="mt-1 w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Max weight (kg)</label>
                   <input required type="number" step="0.1" value={form.maxWeightKg} onChange={(e) => set('maxWeightKg', e.target.value)}
-                    placeholder="75" className="mt-1 w-full p-2 border border-gray-300 rounded" />
+                    placeholder="75" className="mt-1 w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Arm</label>
-                  <select value={form.arm} onChange={(e) => set('arm', e.target.value)} className="mt-1 w-full p-2 border border-gray-300 rounded bg-white">
+                  <select value={form.arm} onChange={(e) => set('arm', e.target.value)} className="mt-1 w-full p-2 border border-gray-300 rounded bg-white text-light-text-main dark:text-dark-text-main">
                     <option value="RIGHT">Right</option>
                     <option value="LEFT">Left</option>
                     <option value="BOTH">Both</option>
@@ -142,7 +142,7 @@ export function CategoryActions({ tournamentId }: { tournamentId: string }) {
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Max athletes (optional)</label>
                   <input type="number" value={form.maxParticipants} onChange={(e) => set('maxParticipants', e.target.value)}
-                    placeholder="e.g. 16" className="mt-1 w-full p-2 border border-gray-300 rounded" />
+                    placeholder="e.g. 16" className="mt-1 w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main" />
                 </div>
               </div>
             </div>

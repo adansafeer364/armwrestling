@@ -60,8 +60,8 @@ export async function deleteCategory(tournamentId: string, categoryId: string) {
 export async function generateDefaultCategories(tournamentId: string) {
   await connectToDatabase();
 
-  // Men's weight classes in 5 kg steps from −55 kg up to −100 kg, then 100 kg+.
-  const steps = [55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+  // Custom weight classes requested: -50, -60, -70, -80, -90, -100, 100+
+  const steps = [50, 60, 70, 80, 90, 100];
   const weightClasses = [
     ...steps.map((kg, i) => ({
       name: `-${kg}kg`,

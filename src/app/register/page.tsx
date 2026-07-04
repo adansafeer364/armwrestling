@@ -90,25 +90,25 @@ function RegisterForm() {
   };
 
   return (
-    <div dir={dir} className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="px-6 py-8 text-gray-900">
-          <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-2">{t('reg_title')}</h2>
+    <div dir={dir} className="min-h-screen bg-light-bg dark:bg-dark-bg py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-light-card dark:bg-dark-card rounded-lg shadow-xl overflow-hidden">
+        <div className="px-6 py-8 text-light-text-main dark:text-dark-text-main">
+          <h2 className="text-3xl font-extrabold text-center text-light-text-main dark:text-dark-text-main mb-2">{t('reg_title')}</h2>
           {lockedComp ? (
             <p className="text-center text-indigo-600 font-medium mb-6">
               {t('reg_for')}: {lockedComp.title}
             </p>
           ) : (
-            <p className="text-center text-gray-500 mb-6">{t('reg_select_hint')}</p>
+            <p className="text-center text-light-text-muted dark:text-dark-text-muted mb-6">{t('reg_select_hint')}</p>
           )}
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 text-red-700 dark:text-red-200">
               <p>{error}</p>
             </div>
           )}
           {success && (
-            <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700">
+            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/10 border-l-4 border-green-500 text-green-700 dark:text-green-200">
               <p className="font-bold">{success}</p>
             </div>
           )}
@@ -116,13 +116,13 @@ function RegisterForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Competition selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">{t('competition')}</label>
+              <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('competition')}</label>
               {preselected && lockedComp ? (
                 <input
                   type="text"
                   value={lockedComp.title}
                   readOnly
-                  className="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 sm:text-sm p-2 border text-gray-700"
+                  className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-dark-card sm:text-sm p-2 border text-gray-700 dark:text-dark-text-main"
                 />
               ) : loadingComps ? (
                 <p className="mt-1 text-sm text-gray-400">{t('loading_comps')}</p>
@@ -133,7 +133,7 @@ function RegisterForm() {
                   required
                   value={competitionId}
                   onChange={(e) => setCompetitionId(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
+                  className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main"
                 >
                   <option value="">{t('select_competition')}</option>
                   {competitions.map((c) => (
@@ -147,47 +147,47 @@ function RegisterForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('full_name')}</label>
-                <input required type="text" name="fullName" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('full_name')}</label>
+                <input required type="text" name="fullName" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('father_name')}</label>
-                <input required type="text" name="fatherName" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('father_name')}</label>
+                <input required type="text" name="fatherName" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('phone')}</label>
-                <input required type="tel" name="phone" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('phone')}</label>
+                <input required type="tel" name="phone" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                <input required type="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('email')}</label>
+                <input required type="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('age')}</label>
-                <input required type="number" name="age" min="10" max="100" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('age')}</label>
+                <input required type="number" name="age" min="10" max="100" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('city')}</label>
-                <input required type="text" name="city" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('city')}</label>
+                <input required type="text" name="city" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('club')}</label>
-                <input type="text" name="clubName" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('club')}</label>
+                <input type="text" name="clubName" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">{t('weight')}</label>
-                <input required type="number" step="0.1" name="weight" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('weight')}</label>
+                <input required type="number" step="0.1" name="weight" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
               {/* Your Pic — placed right before Competing Hand */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">
                   {t('your_pic')} <span className="text-red-500">*{t('required')}</span>
                 </label>
-                <input required type="file" name="profilePicture" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                <input required type="file" name="profilePicture" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted mb-2">
                   {t('hand')} <span className="text-red-500">*{t('required')}</span>
                 </label>
                 <div className="flex flex-wrap gap-3">
@@ -203,8 +203,8 @@ function RegisterForm() {
                       aria-pressed={hand === opt.v}
                       className={`px-6 py-2.5 rounded-lg border-2 font-semibold transition-colors ${
                         hand === opt.v
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                          : 'border-gray-300 text-gray-600 hover:border-indigo-300'
+                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200'
+                                : 'border-gray-300 text-gray-600 hover:border-indigo-300 dark:border-gray-700 dark:text-dark-text-muted'
                       }`}
                     >
                       {opt.label}
@@ -215,18 +215,18 @@ function RegisterForm() {
             </div>
 
             <div className="border-t border-gray-200 pt-6 mt-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">{t('profile_payment')}</h3>
+              <h3 className="text-lg font-medium text-light-text-main dark:text-dark-text-main mb-4">{t('profile_payment')}</h3>
 
-              <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4">
+              <div className="mb-6 rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/5 p-4">
                 <p className="text-sm font-medium text-green-800 mb-3">{t('send_fee_to')}</p>
                 <div className="flex flex-wrap gap-3">
                   {PAYMENT_ACCOUNTS.map((acc) => (
-                    <div key={acc.method} className="bg-white border border-green-200 rounded-md px-3 py-2">
+                    <div key={acc.method} className="bg-light-card dark:bg-dark-card border border-green-200 dark:border-green-800 rounded-md px-3 py-2">
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold uppercase tracking-wide text-green-700">{acc.method}</span>
                         <span className="font-mono font-semibold text-gray-900" dir="ltr">{acc.number}</span>
                       </div>
-                      {acc.name && <div className="text-xs text-gray-500 mt-0.5">{acc.name}</div>}
+                      {acc.name && <div className="text-xs text-light-text-muted dark:text-dark-text-muted mt-0.5">{acc.name}</div>}
                     </div>
                   ))}
                 </div>
@@ -234,24 +234,24 @@ function RegisterForm() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">
                     {t('payment_screenshot')} <span className="text-red-500">*{t('required')}</span>
                   </label>
-                  <input required type="file" name="paymentScreenshot" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                  <input required type="file" name="paymentScreenshot" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">
                     {t('account_number')} <span className="text-red-500">*{t('required')}</span>
                   </label>
-                  <input required type="text" name="paymentAccountNumber" placeholder="e.g. 0300-1234567 / IBAN" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                  <input required type="text" name="paymentAccountNumber" placeholder="e.g. 0300-1234567 / IBAN" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">
                     {t('account_name')} <span className="text-red-500">*{t('required')}</span>
                   </label>
-                  <input required type="text" name="paymentAccountName" placeholder="Name on the paying account" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border" />
+                  <input required type="text" name="paymentAccountName" placeholder="Name on the paying account" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
                 </div>
               </div>
             </div>
@@ -274,7 +274,7 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">Loading…</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-light-text-muted dark:text-dark-text-muted">Loading…</div>}>
       <RegisterForm />
     </Suspense>
   );

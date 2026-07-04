@@ -24,6 +24,13 @@
 .DS_Store
 *.pem
 
+# local Python environment / generated files
+Lib/
+scripts/pip.exe
+scripts/pip3.14.exe
+scripts/pip3.exe
+brochure/img.jpeg
+
 # debug
 npm-debug.log*
 yarn-debug.log*

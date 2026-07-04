@@ -98,7 +98,7 @@ export default function MatchCard({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+    <div className="bg-light-card dark:bg-dark-card rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5 hover:shadow-md transition-shadow text-light-text-main dark:text-dark-text-main">
       <div className="flex justify-between items-start mb-4">
         <div>
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -120,7 +120,7 @@ export default function MatchCard({
       </div>
 
       {!isEditing ? (
-        <div className="text-sm text-gray-600 grid grid-cols-2 gap-2 mb-4">
+        <div className="text-sm text-light-text-muted dark:text-dark-text-muted grid grid-cols-2 gap-2 mb-4">
           <p>
             <span className="font-medium">
               Table:
@@ -167,7 +167,7 @@ export default function MatchCard({
               onChange={(e) =>
                 setStatus(e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main bg-white dark:bg-dark-card"
             >
               <option value="PENDING">
                 Upcoming
@@ -194,7 +194,7 @@ export default function MatchCard({
               onChange={(e) =>
                 setTableNumber(e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main"
               placeholder="e.g. 1"
             />
           </div>
@@ -210,7 +210,7 @@ export default function MatchCard({
               onChange={(e) =>
                 setScheduledTime(e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main"
             />
           </div>
 
@@ -225,7 +225,7 @@ export default function MatchCard({
               onChange={(e) =>
                 setScore(e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main"
               placeholder="e.g. 3-0"
             />
           </div>
@@ -240,7 +240,7 @@ export default function MatchCard({
               onChange={(e) =>
                 setWinnerId(e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded text-light-text-main dark:text-dark-text-main bg-white dark:bg-dark-card"
             >
               <option value="">None</option>
 
