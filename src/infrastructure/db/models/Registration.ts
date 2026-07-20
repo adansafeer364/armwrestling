@@ -10,7 +10,7 @@ export interface IRegistration extends Document {
   age: number;
   city: string;
   clubName?: string;
-  weight: number;
+  weight?: number;
   hand: 'Right' | 'Left' | 'Both';
   profilePictureUrl?: string;
   paymentScreenshotUrl: string;
@@ -71,7 +71,6 @@ const RegistrationSchema = new Schema<IRegistration>(
     },
     weight: {
       type: Number,
-      required: [true, 'Weight is required'],
     },
     hand: {
       type: String,

@@ -17,7 +17,6 @@ export async function POST(request: Request) {
     const age = formData.get('age') as string;
     const city = formData.get('city') as string;
     const clubName = formData.get('clubName') as string;
-    const weight = formData.get('weight') as string;
     const hand = formData.get('hand') as string;
     const tournamentId = formData.get('tournamentId') as string;
     const paymentAccountNumber = formData.get('paymentAccountNumber') as string;
@@ -28,7 +27,7 @@ export async function POST(request: Request) {
     const paymentScreenshot = formData.get('paymentScreenshot') as File | null;
 
     // Validate required fields
-    if (!fullName || !fatherName || !phone || !email || !age || !city || !weight || !hand) {
+    if (!fullName || !fatherName || !phone || !email || !age || !city || !hand) {
       return NextResponse.json({ error: 'Missing required text fields' }, { status: 400 });
     }
 
@@ -94,7 +93,6 @@ export async function POST(request: Request) {
           age: parseInt(age, 10),
           city,
           clubName,
-          weight: parseFloat(weight),
           hand,
           profilePictureUrl,
           paymentScreenshotUrl,

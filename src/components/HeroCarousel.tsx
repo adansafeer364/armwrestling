@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin, Trophy, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BrandLogo from './BrandLogo';
 import { formatPKR } from '@/lib/format';
@@ -15,6 +14,8 @@ interface Slide {
   location?: string;
   startDate?: string;
   prizePool?: number;
+  weightCategory?: string;
+  status?: string;
 }
 
 const DEFAULT_SLIDES: Slide[] = [
@@ -22,12 +23,26 @@ const DEFAULT_SLIDES: Slide[] = [
     _id: 's1',
     title: 'Titan Clash 2026',
     description: 'Two pullers. One table. Absolute domination.',
-    bannerImage: '/images/hero-bg.jpg',
     location: 'Mansehra Sports Arena',
     startDate: new Date().toISOString(),
     prizePool: 150000,
+    weightCategory: 'Open Championship',
   },
 ];
+
+function createPalette(value: string) {
+  const hash = Array.from(value).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const hueA = hash % 360;
+  const hueB = (hueA + 70 + (hash % 11) * 7) % 360;
+  const hueC = (hueA + 190) % 360;
+
+  return {
+    start: `hsl(${hueA} 78% 58%)`,
+    mid: `hsl(${hueB} 70% 44%)`,
+    end: `hsl(${hueC} 72% 24%)`,
+    glow: `hsl(${(hueB + 30) % 360} 90% 72%)`,
+  };
+}
 
 export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] }) {
   const [slidesState, setSlidesState] = useState<Slide[]>(propSlides && propSlides.length ? propSlides : []);
@@ -38,20 +53,17 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
   const [showSlideText, setShowSlideText] = useState(true);
 
   useEffect(() => {
-    // show text when slide changes, then hide after 5s
     setShowSlideText(true);
     const t = setTimeout(() => setShowSlideText(false), 5000);
     return () => clearTimeout(t);
   }, [index]);
 
   useEffect(() => {
-    // auto-advance every 8s
     const id = setInterval(() => setIndex((s) => (s + 1) % count), 8000);
     return () => clearInterval(id);
   }, [count]);
 
   useEffect(() => {
-    // If no slides were provided via props, fetch competitions from API
     if (propSlides && propSlides.length) {
       setLoaded(true);
       return;
@@ -71,114 +83,128 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
   const next = () => setIndex((i) => (i + 1) % count);
 
   const slide = slides[index];
-  const isBrochure = !!slide?.bannerImage && slide.bannerImage.toLowerCase().includes('brochure');
+
+  if (!slide) {
+    return null;
+  }
+
+  const palette = createPalette(slide.title);
+  const slideStyle = {
+    backgroundImage: `radial-gradient(circle at 15% 20%, rgba(255,255,255,0.22), transparent 22%), radial-gradient(circle at 85% 18%, rgba(255,255,255,0.17), transparent 18%), linear-gradient(135deg, ${palette.start} 0%, ${palette.mid} 48%, ${palette.end} 100%)`,
+  };
 
   return (
-    <section className="relative w-full overflow-hidden bg-dark-bg pt-20 min-h-screen">
-      {slides.map((s, i) => (
-        <div
-          key={s._id}
-          className={`absolute inset-0 transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        >
-          <Image
-            src={s.bannerImage || '/images/hero-bg.jpg'}
-            alt={s.title}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className="object-contain object-center sm:object-cover"
-          />
+    <section className="relative w-full overflow-hidden bg-[#050816] pt-20 min-h-screen">
+      {slides.map((s, i) => {
+        const paletteForSlide = createPalette(s.title);
+        const slideBg = {
+          backgroundImage: `radial-gradient(circle at 15% 20%, rgba(255,255,255,0.22), transparent 22%), radial-gradient(circle at 85% 18%, rgba(255,255,255,0.17), transparent 18%), linear-gradient(135deg, ${paletteForSlide.start} 0%, ${paletteForSlide.mid} 48%, ${paletteForSlide.end} 100%)`,
+        };
 
-          {/* overlay: lighten when brochure to keep text readable */}
+        return (
           <div
-            aria-hidden
-            className={`absolute inset-0 ${isBrochure ? 'bg-black/18' : 'bg-gradient-to-t from-dark-bg via-dark-bg/45 to-dark-bg/18'}`}
-          />
+            key={s._id}
+            className={`absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <div className="absolute inset-0" style={slideBg} />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_30%),linear-gradient(180deg,rgba(5,8,22,0.08),rgba(5,8,22,0.55))]" />
+            <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full blur-3xl opacity-50" style={{ backgroundColor: paletteForSlide.glow }} />
+            <div className="absolute -bottom-20 right-0 h-80 w-80 rounded-full blur-3xl opacity-30" style={{ backgroundColor: paletteForSlide.start }} />
 
-          <div className="relative z-10 flex items-center justify-center h-full px-4">
-            <div className="max-w-4xl w-full text-center">
-              <div className="flex justify-center mb-6">
-                <BrandLogo animated showText className="justify-center" />
-              </div>
-
-              <div className="relative inline-block">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: showSlideText ? 0.6 : 0 }}
-                  transition={{ duration: 0.45 }}
-                  className="absolute -inset-2 rounded-xl bg-black/60 backdrop-blur-sm"
-                />
+            <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
+              <div className="w-full max-w-6xl">
+                <div className="flex justify-center mb-8">
+                  <BrandLogo animated showText className="justify-center" />
+                </div>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={showSlideText ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={showSlideText ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
                   transition={{ duration: 0.45 }}
-                  className="relative z-10 px-6 py-6 sm:px-8 sm:py-8 rounded-xl mx-auto text-center text-white"
+                  className="mx-auto max-w-5xl rounded-[2rem] border border-white/20 bg-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8 lg:p-12"
                 >
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight uppercase">
-                    {s.title}
-                  </h1>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-white/80">
+                      <Sparkles className="h-3.5 w-3.5 text-yellow-300" />
+                      {s.weightCategory || 'Featured Tournament'}
+                    </span>
+                    {s.status && (
+                      <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/80">
+                        {s.status.replace(/_/g, ' ')}
+                      </span>
+                    )}
+                  </div>
 
-                  {s.description && <p className="mt-4 max-w-2xl text-base sm:text-lg mx-auto">{s.description}</p>}
+                  <div className="mt-6 text-center">
+                    <h1 className="text-4xl font-black uppercase tracking-[0.2em] text-white sm:text-5xl lg:text-7xl">
+                      {s.title}
+                    </h1>
+                    {s.description && <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-white/85 sm:text-lg">{s.description}</p>}
+                  </div>
 
-                  <div className="mt-6 flex flex-wrap items-center justify-center gap-4 font-black text-sm">
+                  <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm font-semibold text-white/90 sm:gap-4">
                     {s.location && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <MapPin className="h-4 w-4 text-brand-primary" /> {s.location}
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-2">
+                        <MapPin className="h-4 w-4 text-cyan-200" />
+                        {s.location}
                       </span>
                     )}
                     {s.startDate && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <Calendar className="h-4 w-4 text-brand-primary" /> {new Date(s.startDate).toLocaleDateString()}
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-2">
+                        <Calendar className="h-4 w-4 text-cyan-200" />
+                        {new Date(s.startDate).toLocaleDateString()}
                       </span>
                     )}
                     {s.prizePool ? (
-                      <span className="inline-flex items-center gap-1.5 text-green-400 font-semibold">Prize: {formatPKR(s.prizePool)}</span>
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-2 text-emerald-200">
+                        <Trophy className="h-4 w-4" />
+                        Prize: {formatPKR(s.prizePool)}
+                      </span>
                     ) : null}
                   </div>
 
-                  {/* Register CTA removed from timed block so it stays visible */}
+                  <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                    <a
+                      href={`/register?tournament=${s._id}`}
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-100"
+                    >
+                      <span>Register Now</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                    <div className="rounded-full border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white/80">
+                      {s.weightCategory ? `Compete in ${s.weightCategory}` : 'Full event experience'}
+                    </div>
+                  </div>
                 </motion.div>
               </div>
             </div>
           </div>
-          {/* Persistent Register CTA (always visible) */}
-          <div className="absolute bottom-40 left-1/2 -translate-x-1/2 z-30">
-            <a
-              href={`/register?tournament=${s._id}`}
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full font-bold text-base bg-brand-primary hover:bg-brand-primary/90 text-white shadow-lg transition-all duration-300"
-            >
-              <span>Register</span>
-              <ArrowRight className="h-5 w-5" />
-            </a>
-          </div>
-        </div>
-      ))}
+        );
+      })}
 
-      {/* Controls */}
       {count > 1 && (
         <>
-          <button onClick={prev} aria-label="Previous" className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm">
+          <button onClick={prev} aria-label="Previous" className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
             <ChevronLeft className="h-6 w-6" />
           </button>
-          <button onClick={next} aria-label="Next" className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm">
+          <button onClick={next} aria-label="Next" className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
             <ChevronRight className="h-6 w-6" />
           </button>
 
-          <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
             {slides.map((s, i) => (
               <button
                 key={s._id}
                 onClick={() => setIndex(i)}
                 aria-label={`Go to slide ${i + 1}`}
-                className={`h-2.5 rounded-full transition-all ${i === index ? 'w-8 bg-brand-primary' : 'w-2.5 bg-white/40 hover:bg-white/60'}`}
+                className={`h-2.5 rounded-full transition-all ${i === index ? 'w-8 bg-white' : 'w-2.5 bg-white/40 hover:bg-white/60'}`}
               />
             ))}
           </div>
         </>
       )}
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-dark-bg to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050816] to-transparent" />
     </section>
   );
 }

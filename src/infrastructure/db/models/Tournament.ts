@@ -6,6 +6,7 @@ export interface ITournament extends Document {
   description?: string;
   bannerImage?: string;
   location: string;
+  weightCategory: string;
   mapAddress?: string;
   startDate: Date;
   endDate: Date;
@@ -42,6 +43,11 @@ export const TournamentSchema = new Schema<ITournament>(
     location: {
       type: String,
       required: [true, 'Tournament venue location is required'],
+      trim: true,
+    },
+    weightCategory: {
+      type: String,
+      required: [true, 'Weight category is required'],
       trim: true,
     },
     mapAddress: {

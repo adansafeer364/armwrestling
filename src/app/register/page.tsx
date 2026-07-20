@@ -174,9 +174,11 @@ function RegisterForm() {
                 <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('club')}</label>
                 <input type="text" name="clubName" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">{t('weight')}</label>
-                <input required type="number" step="0.1" name="weight" className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-transparent text-light-text-main dark:text-dark-text-main" />
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-light-text-muted dark:text-dark-text-muted">Tournament scope</label>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                  This tournament already represents a single weight category. No extra weight entry is required.
+                </p>
               </div>
               {/* Your Pic — placed right before Competing Hand */}
               <div className="md:col-span-2">

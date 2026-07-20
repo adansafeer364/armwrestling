@@ -15,9 +15,6 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
       const formData = new FormData(e.currentTarget);
       if (tournament?._id) {
         formData.append('id', tournament._id.toString());
-        if (tournament.bannerImage) {
-            formData.append('existingBanner', tournament.bannerImage);
-        }
       }
       await saveTournament(formData);
     } catch (err: any) {
@@ -44,6 +41,11 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
           <label className="block text-sm font-medium text-gray-700">Location (short label)</label>
           <input required type="text" name="location" defaultValue={tournament?.location} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Weight Category</label>
+          <input required type="text" name="weightCategory" defaultValue={tournament?.weightCategory} placeholder="e.g. -70kg" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
+          <p className="text-xs text-gray-500 mt-1">This is shown on the homepage carousel so each tournament feels distinct.</p>
+        </div>
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">Map Coordinates — Latitude, Longitude</label>
           <input type="text" name="mapAddress" defaultValue={tournament?.mapAddress} placeholder="e.g. 34.3360, 73.1968" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
@@ -68,22 +70,55 @@ export default function TournamentForm({ tournament }: { tournament?: any }) {
           <label className="block text-sm font-medium text-gray-700">Prize Pool (Rs)</label>
           <input required type="number" name="prizePool" defaultValue={tournament?.prizePool || 0} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main" />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Status</label>
-          <select name="status" defaultValue={tournament?.status || 'DRAFT'} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border bg-white text-light-text-main dark:text-dark-text-main">
-            <option value="DRAFT">Draft</option>
-            <option value="REGISTRATION_OPEN">Registration Open</option>
-            <option value="REGISTRATION_CLOSED">Registration Closed</option>
-            <option value="ACTIVE">Live</option>
-            <option value="COMPLETED">Completed</option>
-            <option value="CANCELLED">Cancelled</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Banner Image</label>
-          <input type="file" name="banner" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
-          {tournament?.bannerImage && <p className="text-xs text-gray-500 mt-1">Leave empty to keep current banner.</p>}
-        </div>
+       <div>
+  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Status
+  </label>
+
+  <select
+    name="status"
+    defaultValue={tournament?.status || "DRAFT"}
+    className="
+      mt-1
+      block
+      w-full
+      rounded-md
+      border
+      p-2
+      shadow-sm
+      bg-white
+      text-gray-900
+      border-gray-300
+      focus:border-indigo-500
+      focus:ring-indigo-500
+
+      dark:bg-gray-800
+      dark:text-white
+      dark:border-gray-600
+      dark:focus:border-indigo-400
+      dark:focus:ring-indigo-400
+    "
+  >
+    <option value="DRAFT" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Draft
+    </option>
+    <option value="REGISTRATION_OPEN" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Registration Open
+    </option>
+    <option value="REGISTRATION_CLOSED" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Registration Closed
+    </option>
+    <option value="ACTIVE" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Live
+    </option>
+    <option value="COMPLETED" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Completed
+    </option>
+    <option value="CANCELLED" className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+      Cancelled
+    </option>
+  </select>
+</div>
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">Description</label>
           <textarea name="description" defaultValue={tournament?.description} rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-light-text-main dark:text-dark-text-main"></textarea>

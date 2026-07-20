@@ -2,9 +2,11 @@ import connectToDatabase from '@/infrastructure/db/connect';
 import { Match } from '@/infrastructure/db/models/Match';
 import { Tournament } from '@/infrastructure/db/models/Tournament';
 import { Registration } from '@/infrastructure/db/models/Registration';
+import { Category } from '@/infrastructure/db/models/Category';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import MatchCard from './MatchCard';
+import RefereePanel from '@/app/referee/RefereePanel';
 import mongoose from 'mongoose';
 
 export const dynamic = 'force-dynamic';
@@ -22,6 +24,22 @@ export default async function MatchesManagementPage({ params }: { params: Promis
   const tId = new mongoose.Types.ObjectId(id);
   const matches = await Match.find({ tournamentId: tId }).sort({ scheduledTime: 1, round: 1, matchNumber: 1 }).lean();
 
+  const categories = await Category.find({ tournamentId: tId })
+    .populate({ path: 'participants', match: { status: 'APPROVED' }, select: '_id' })
+    .sort({ minWeightKg: 1, arm: 1 })
+    .lean();
+
+  const categoriesData = (categories as any[])
+    .filter((c) => (c.participants?.length || 0) > 0)
+    .map((c: any) => ({
+      _id: c._id.toString(),
+      name: c.name,
+      arm: c.arm,
+      minWeightKg: c.minWeightKg,
+      maxWeightKg: c.maxWeightKg,
+      participantIds: (c.participants as any[]).map((p: any) => p._id.toString()),
+    }));
+
   // Collect competitor ids (now Registration references)
   const competitorIds = new Set<string>();
   matches.forEach((m) => {
@@ -37,6 +55,10 @@ export default async function MatchesManagementPage({ params }: { params: Promis
   // Serialize for client components
   const matchesObj = JSON.parse(JSON.stringify(matches));
   const competitorsObj = JSON.parse(JSON.stringify(competitors));
+  const competitorMap = competitorsObj.reduce((acc: Record<string, any>, competitor: any) => {
+    acc[competitor._id] = competitor;
+    return acc;
+  }, {} as Record<string, any>);
 
   const upcoming = matchesObj.filter((m: any) => m.status === 'PENDING' || m.status === 'READY');
   const live = matchesObj.filter((m: any) => m.status === 'IN_PROGRESS');
@@ -51,12 +73,17 @@ export default async function MatchesManagementPage({ params }: { params: Promis
           <p className="text-gray-500 text-sm mt-1">{tournament.title}</p>
         </div>
         <div className="text-sm text-gray-500">
-          Matches are generated and refereed live from the{' '}
-          <Link href="/referee" className="text-indigo-600 font-medium hover:underline">Referee Panel</Link>.
+          Admins now manage rounds, swaps, and winners directly from this page.
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mb-8 rounded-xl border border-indigo-100 bg-indigo-50/70 p-4 text-sm text-indigo-900">
+        Use the admin control panel below to generate rounds, swap athletes, and declare match winners without leaving tournament management.
+      </div>
+
+      <RefereePanel categories={categoriesData} competitors={competitorMap} matches={matchesObj} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
         {/* Live Matches */}
         <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
           <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center">

@@ -7,7 +7,6 @@ import { Category } from '@/infrastructure/db/models/Category';
 import { Match } from '@/infrastructure/db/models/Match';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { uploadFileToCloudinary } from '@/infrastructure/upload/cloudinary';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import mongoose from 'mongoose';
@@ -24,33 +23,30 @@ export async function saveTournament(formData: FormData) {
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
   const location = formData.get('location') as string;
+  const weightCategory = formData.get('weightCategory') as string;
   const mapAddress = formData.get('mapAddress') as string;
   const startDate = formData.get('startDate') as string;
   const endDate = formData.get('endDate') as string;
   const registrationDeadline = formData.get('registrationDeadline') as string;
   const prizePool = formData.get('prizePool') as string;
   const status = formData.get('status') as 'DRAFT' | 'REGISTRATION_OPEN' | 'REGISTRATION_CLOSED' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
-  const banner = formData.get('banner') as File | null;
 
-  let bannerImage = formData.get('existingBanner') as string;
-
-  if (banner && banner.size > 0) {
-    const arrayBuffer = await banner.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    bannerImage = await uploadFileToCloudinary(buffer, 'armwrestling/tournaments', banner.type);
+  if (!weightCategory?.trim()) {
+    throw new Error('Weight category is required.');
   }
 
   const tournamentData = {
     title,
     description,
     location,
+    weightCategory: weightCategory.trim(),
     mapAddress,
     startDate: new Date(startDate),
     endDate: new Date(endDate),
     registrationDeadline: new Date(registrationDeadline),
     prizePool: Number(prizePool),
     status,
-    bannerImage,
+    bannerImage: '',
     organizerId: session.user.id,
   };
 

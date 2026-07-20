@@ -120,7 +120,8 @@ export async function autoAssignAthletes(tournamentId: string) {
 
   for (const reg of registrations) {
     const weight = reg.weight;
-    
+    if (typeof weight !== 'number') continue;
+
     let preferredArms: string[] = [];
     if (reg.hand === 'Both') {
       preferredArms = ['LEFT', 'RIGHT'];

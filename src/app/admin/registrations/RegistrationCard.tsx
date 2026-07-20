@@ -67,7 +67,6 @@ export default function RegistrationCard({ reg }: { reg: any }) {
       <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-600 mt-4">
         <p><span className="font-medium text-gray-800">Email:</span> {reg.email}</p>
         <p><span className="font-medium text-gray-800">Phone:</span> {reg.phone}</p>
-        <p><span className="font-medium text-gray-800">Weight:</span> {reg.weight} kg</p>
         <p><span className="font-medium text-gray-800">Hand:</span> {reg.hand}</p>
         <p><span className="font-medium text-gray-800">Age:</span> {reg.age}</p>
         <p><span className="font-medium text-gray-800">City:</span> {reg.city}</p>

@@ -11,7 +11,7 @@ export async function GET() {
       status: { $in: ['REGISTRATION_OPEN', 'ACTIVE'] },
     })
       .sort({ startDate: 1 })
-      .select('title description bannerImage location mapAddress startDate prizePool status')
+      .select('title description bannerImage location mapAddress startDate prizePool status weightCategory')
       .lean();
 
     const data = tournaments.map((t) => ({
@@ -24,6 +24,7 @@ export async function GET() {
       startDate: t.startDate,
       prizePool: t.prizePool || 0,
       status: t.status,
+      weightCategory: t.weightCategory || '',
     }));
 
     return NextResponse.json(
