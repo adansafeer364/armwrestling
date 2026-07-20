@@ -106,10 +106,82 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
             key={s._id}
             className={`absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
-            <div className="absolute inset-0" style={slideBg} />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_30%),linear-gradient(180deg,rgba(5,8,22,0.08),rgba(5,8,22,0.55))]" />
-            <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full blur-3xl opacity-50" style={{ backgroundColor: paletteForSlide.glow }} />
-            <div className="absolute -bottom-20 right-0 h-80 w-80 rounded-full blur-3xl opacity-30" style={{ backgroundColor: paletteForSlide.start }} />
+           <div className="absolute inset-0 overflow-hidden bg-black">
+  {/* Blue ambient glow */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1d4ed822_0%,transparent_60%)]" />
+
+  {/* Cube 1 */}
+  <div
+    className="absolute left-[18%] top-[18%] w-64 h-64"
+    style={{
+      clipPath:
+        "polygon(30% 0%,100% 25%,70% 100%,0% 75%)",
+      background:
+        "linear-gradient(135deg,#0f172a,#000 60%)",
+      boxShadow:
+        "20px 20px 60px rgba(0,0,0,.9)"
+    }}
+  >
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "linear-gradient(135deg,transparent 55%,#2563eb 100%)",
+        opacity:.85,
+        filter:"blur(8px)"
+      }}
+    />
+  </div>
+
+  {/* Cube 2 */}
+  <div
+    className="absolute right-[15%] top-[30%] w-72 h-72"
+    style={{
+      clipPath:
+        "polygon(20% 0%,100% 20%,80% 100%,0% 80%)",
+      background:
+        "linear-gradient(135deg,#111827,#000)",
+      boxShadow:
+        "30px 30px 70px rgba(0,0,0,.95)"
+    }}
+  >
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "linear-gradient(140deg,transparent 55%,#3b82f6 100%)",
+        opacity:.8,
+        filter:"blur(10px)"
+      }}
+    />
+  </div>
+
+  {/* Cube 3 */}
+  <div
+    className="absolute left-[12%] bottom-[12%] w-80 h-80"
+    style={{
+      clipPath:
+        "polygon(25% 0%,100% 22%,75% 100%,0% 80%)",
+      background:
+        "linear-gradient(135deg,#0b1120,#000)",
+      boxShadow:
+        "25px 25px 80px rgba(0,0,0,.95)"
+    }}
+  >
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "linear-gradient(140deg,transparent 55%,#2563eb 100%)",
+        opacity:.75,
+        filter:"blur(8px)"
+      }}
+    />
+  </div>
+
+  {/* Soft blue bloom */}
+  <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/10 blur-[180px]" />
+</div>
 
             <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
               <div className="w-full max-w-6xl">
@@ -118,9 +190,6 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
                 </div>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={showSlideText ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.45 }}
                   className="mx-auto max-w-5xl rounded-[2rem] border border-white/20 bg-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8 lg:p-12"
                 >
                   <div className="flex flex-wrap items-center justify-center gap-3">
