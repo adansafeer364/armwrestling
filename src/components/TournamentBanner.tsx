@@ -6,7 +6,7 @@ import { Flame, MapPin, Calendar } from 'lucide-react';
 
 export default function TournamentBanner() {
   return (
-    <div className="relative bg-gradient-to-r from-brand-secondary via-brand-primary to-brand-accent text-white overflow-hidden py-3">
+    <div className="relative bg-gradient-to-r from-brand-secondary via-brand-primary to-brand-primary text-white overflow-hidden py-3">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3 text-sm font-semibold">

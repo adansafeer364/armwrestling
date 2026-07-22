@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import SlideCarousel from './SlideCarousel';
+import { createPalette } from '@/lib/palette';
 
 interface Comp {
   _id: string;
@@ -21,6 +23,7 @@ function timeParts(target: number, now: number) {
 
 function TimerCard({ comp, now }: { comp: Comp; now: number }) {
   const t = timeParts(new Date(comp.startDate).getTime(), now);
+  const accent = createPalette(comp.title).start;
   const items = [
     { label: 'Days', value: t.days },
     { label: 'Hours', value: t.hours },
@@ -28,24 +31,31 @@ function TimerCard({ comp, now }: { comp: Comp; now: number }) {
     { label: 'Seconds', value: t.seconds },
   ];
   return (
-    <div className="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-800">
-      <div className="text-center mb-6">
-        <h3 className="text-xs sm:text-sm font-bold tracking-widest text-brand-primary uppercase">{comp.title}</h3>
-        <p className="text-lg sm:text-2xl font-black text-light-text-main dark:text-dark-text-main mt-1">
+    <div className="relative overflow-hidden bg-white dark:bg-dark-card rounded-3xl p-5 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-800">
+      {/* per-tournament colour accent */}
+      <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: accent }} />
+
+      <div className="text-center mb-5 sm:mb-6 px-6">
+        <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase truncate" style={{ color: accent }}>
+          {comp.title}
+        </h3>
+        <p className="text-base sm:text-2xl font-black text-light-text-main dark:text-dark-text-main mt-1">
           {t.over ? 'EVENT HAS STARTED' : 'STARTS IN'}
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+
+      <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6">
         {items.map((item) => (
-          <div key={item.label} className="relative group">
-            <div className="relative flex flex-col items-center justify-center py-6 px-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl">
-              <span className="text-4xl sm:text-5xl font-black text-brand-primary dark:text-white tabular-nums">
-                {String(item.value).padStart(2, '0')}
-              </span>
-              <span className="text-xs font-semibold uppercase text-light-text-muted dark:text-dark-text-muted mt-2 tracking-wider">
-                {item.label}
-              </span>
-            </div>
+          <div
+            key={item.label}
+            className="flex flex-col items-center justify-center py-4 sm:py-6 px-1 sm:px-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl sm:rounded-2xl"
+          >
+            <span className="text-2xl sm:text-4xl md:text-5xl font-black tabular-nums leading-none" style={{ color: accent }}>
+              {String(item.value).padStart(2, '0')}
+            </span>
+            <span className="text-[10px] sm:text-xs font-semibold uppercase text-light-text-muted dark:text-dark-text-muted mt-1.5 sm:mt-2 tracking-wider">
+              {item.label}
+            </span>
           </div>
         ))}
       </div>
@@ -73,10 +83,12 @@ export default function CountdownTimer() {
   if (now === null || comps.length === 0) return null; // nothing to count down to yet
 
   return (
-    <section className="relative z-20 -mt-20 max-w-5xl mx-auto px-4 sm:px-6 space-y-6">
-      {comps.map((c) => (
-        <TimerCard key={c._id} comp={c} now={now} />
-      ))}
+    <section className="relative z-20 -mt-10 sm:-mt-20 max-w-5xl mx-auto px-3 sm:px-6">
+      <SlideCarousel activeColor={(i) => createPalette(comps[i].title).start}>
+        {comps.map((c) => (
+          <TimerCard key={c._id} comp={c} now={now} />
+        ))}
+      </SlideCarousel>
     </section>
   );
 }

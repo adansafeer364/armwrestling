@@ -94,7 +94,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#050816] pt-20 min-h-screen">
+    <section className="relative w-full overflow-hidden bg-[#050816] pt-24 sm:pt-20 min-h-screen">
       {slides.map((s, i) => {
         const paletteForSlide = createPalette(s.title);
         const slideBg = {
@@ -107,8 +107,8 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
             className={`absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
            <div className="absolute inset-0 overflow-hidden bg-black">
-  {/* Blue ambient glow */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1d4ed822_0%,transparent_60%)]" />
+  {/* Per-tournament ambient glow */}
+  <div className="absolute inset-0" style={{ background: `radial-gradient(circle at center, ${paletteForSlide.start} 0%, transparent 60%)`, opacity: 0.16 }} />
 
   {/* Cube 1 */}
   <div
@@ -126,7 +126,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
       className="absolute inset-0"
       style={{
         background:
-          "linear-gradient(135deg,transparent 55%,#2563eb 100%)",
+          `linear-gradient(135deg,transparent 55%,${paletteForSlide.start} 100%)`,
         opacity:.85,
         filter:"blur(8px)"
       }}
@@ -149,7 +149,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
       className="absolute inset-0"
       style={{
         background:
-          "linear-gradient(140deg,transparent 55%,#3b82f6 100%)",
+          `linear-gradient(140deg,transparent 55%,${paletteForSlide.glow} 100%)`,
         opacity:.8,
         filter:"blur(10px)"
       }}
@@ -172,25 +172,25 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
       className="absolute inset-0"
       style={{
         background:
-          "linear-gradient(140deg,transparent 55%,#2563eb 100%)",
+          `linear-gradient(140deg,transparent 55%,${paletteForSlide.start} 100%)`,
         opacity:.75,
         filter:"blur(8px)"
       }}
     />
   </div>
 
-  {/* Soft blue bloom */}
-  <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/10 blur-[180px]" />
+  {/* Soft per-tournament bloom */}
+  <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[180px]" style={{ backgroundColor: paletteForSlide.glow, opacity: 0.12 }} />
 </div>
 
-            <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
+            <div className="relative z-10 flex min-h-[calc(100svh-6rem)] sm:min-h-[calc(100svh-5rem)] items-start sm:items-center justify-center px-4 py-6 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
               <div className="w-full max-w-6xl">
-                <div className="flex justify-center mb-8">
+                <div className="flex justify-center mb-6 sm:mb-8">
                   <BrandLogo animated showText className="justify-center" />
                 </div>
 
                 <motion.div
-                  className="mx-auto max-w-5xl rounded-[2rem] border border-white/20 bg-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8 lg:p-12"
+                  className="mx-auto max-w-5xl rounded-3xl sm:rounded-[2rem] border border-white/20 bg-white/10 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8 lg:p-12"
                 >
                   <div className="flex flex-wrap items-center justify-center gap-3">
                     <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-white/80">
@@ -204,14 +204,14 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
                     )}
                   </div>
 
-                  <div className="mt-6 text-center">
-                    <h1 className="text-4xl font-black uppercase tracking-[0.2em] text-white sm:text-5xl lg:text-7xl">
+                  <div className="mt-4 sm:mt-6 text-center">
+                    <h1 className="text-2xl font-black uppercase tracking-tight text-white sm:text-5xl sm:tracking-[0.14em] lg:text-7xl break-words">
                       {s.title}
                     </h1>
                     {s.description && <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-white/85 sm:text-lg">{s.description}</p>}
                   </div>
 
-                  <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm font-semibold text-white/90 sm:gap-4">
+                  <div className="mt-5 sm:mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold text-white/90 sm:gap-4">
                     {s.location && (
                       <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-3 py-2">
                         <MapPin className="h-4 w-4 text-cyan-200" />
@@ -232,7 +232,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
                     ) : null}
                   </div>
 
-                  <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                  <div className="mt-6 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                     <a
                       href={`/register?tournament=${s._id}`}
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-100"
