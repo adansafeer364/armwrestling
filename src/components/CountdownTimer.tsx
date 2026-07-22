@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import SlideCarousel from './SlideCarousel';
-import { createPalette } from '@/lib/palette';
+import SlideCarousel from './SlideCarousel'; // Assuming SlideCarousel is in the same directory
+import { createPalette } from '../lib/palette';
 
 interface Comp {
   _id: string;
