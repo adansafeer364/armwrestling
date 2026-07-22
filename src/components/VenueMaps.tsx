@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
-import SlideCarousel from './SlideCarousel'; // Assuming SlideCarousel is in the same directory
-import { createPalette } from '../lib/palette';
+import SlideCarousel from './SlideCarousel';
+import { createPalette } from '@/lib/palette';
 
 interface Venue {
   _id: string;
