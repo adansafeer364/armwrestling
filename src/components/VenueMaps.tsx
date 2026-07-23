@@ -1,18 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
 import SlideCarousel from './SlideCarousel';
 import { createPalette } from '@/lib/palette';
+import { useCompetitions, Competition } from './useCompetitions';
 
-interface Venue {
-  _id: string;
-  title: string;
-  location: string;
-  mapAddress: string;
-}
-
-function MapCard({ v }: { v: Venue }) {
+function MapCard({ v }: { v: Competition }) {
   const accent = createPalette(v.title).start;
   const q = encodeURIComponent(v.mapAddress);
   const embed = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
@@ -55,16 +49,17 @@ function MapCard({ v }: { v: Venue }) {
 }
 
 export default function VenueMaps() {
-  const [venues, setVenues] = useState<Venue[]>([]);
+  const { competitions, isLoading } = useCompetitions();
+  const venues = useMemo(
+    () => competitions.filter((c) => c.mapAddress && c.mapAddress.trim()),
+    [competitions]
+  );
 
-  useEffect(() => {
-    fetch('/api/competitions')
-      .then((r) => r.json())
-      .then((d) => setVenues((d.competitions || []).filter((c: Venue) => c.mapAddress && c.mapAddress.trim())))
-      .catch(() => setVenues([]));
-  }, []);
-
-  if (venues.length === 0) return null; // only show when an admin has set a map location
+  // Show a placeholder while loading to prevent layout shift
+  if (isLoading) {
+    // This height can be adjusted to match the approximate height of the map card
+    return <div className="py-16 sm:py-24 h-[600px]" />;
+  }
 
   return (
     <section id="venue" className="py-16 sm:py-24 bg-light-bg dark:bg-dark-bg">

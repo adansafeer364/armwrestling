@@ -1,14 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import SlideCarousel from './SlideCarousel';
 import { createPalette } from '@/lib/palette';
-
-interface Comp {
-  _id: string;
-  title: string;
-  startDate: string;
-}
+import { useCompetitions, Competition } from './useCompetitions';
 
 function timeParts(target: number, now: number) {
   const diff = Math.max(0, target - now);
@@ -21,7 +16,16 @@ function timeParts(target: number, now: number) {
   };
 }
 
-function TimerCard({ comp, now }: { comp: Comp; now: number }) {
+function TimerCard({ comp }: { comp: Competition }) {
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    // This effect sets up the live-ticking "now" time for each card individually
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(id);
+  }, []);
+
   const t = timeParts(new Date(comp.startDate).getTime(), now);
   const accent = createPalette(comp.title).start;
   const items = [
@@ -64,30 +68,21 @@ function TimerCard({ comp, now }: { comp: Comp; now: number }) {
 }
 
 export default function CountdownTimer() {
-  const [comps, setComps] = useState<Comp[]>([]);
-  const [now, setNow] = useState<number | null>(null);
+  const { competitions: allCompetitions, isLoading } = useCompetitions();
 
-  useEffect(() => {
-    fetch('/api/competitions')
-      .then((r) => r.json())
-      .then((d) => setComps((d.competitions || []).filter((c: Comp) => c.startDate)))
-      .catch(() => setComps([]));
-  }, []);
+  const comps = useMemo(() => allCompetitions.filter((c) => c.startDate), [allCompetitions]);
 
-  useEffect(() => {
-    setNow(Date.now());
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
+  // Show a placeholder or loading skeleton while fetching competitions
+  if (isLoading) {
+    return <div className="h-48" />; // Simple placeholder height
+  }
 
-  if (now === null || comps.length === 0) return null; // nothing to count down to yet
+  if (comps.length === 0) return null;
 
   return (
     <section className="relative z-20 -mt-10 sm:-mt-20 max-w-5xl mx-auto px-3 sm:px-6">
       <SlideCarousel activeColor={(i) => createPalette(comps[i].title).start}>
-        {comps.map((c) => (
-          <TimerCard key={c._id} comp={c} now={now} />
-        ))}
+        {comps.map((c) => <TimerCard key={c._id} comp={c} />)}
       </SlideCarousel>
     </section>
   );
