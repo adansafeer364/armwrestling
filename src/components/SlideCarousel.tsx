@@ -52,10 +52,9 @@ export default function SlideCarousel({
             key={index}
             className={`
               transition-opacity duration-300 ease-in-out
-              ${
-                index === i
-                  ? 'opacity-100 relative'
-                  : 'opacity-0 absolute inset-0 pointer-events-none'
+              ${index === i
+                ? 'opacity-100 relative'
+                : 'opacity-0 absolute inset-0 pointer-events-none'
               }
             `}
           >
@@ -88,18 +87,18 @@ export default function SlideCarousel({
               style={
                 d === i && activeColor
                   ? {
-                      backgroundColor: activeColor(d),
-                    }
+                    backgroundColor: activeColor(d),
+                  }
                   : undefined
               }
               className={`
-                h-2.5 rounded-full transition-all duration-300
-                ${
-                  d === i
-                    ? 'w-8 bg-brand-primary'
-                    : 'w-2.5 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400'
+  h-2.5 rounded-full 
+  transition-[width,background-color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+  ${d === i
+                  ? 'w-8 bg-brand-primary'
+                  : 'w-2.5 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400'
                 }
-              `}
+`}
             />
           ))}
         </div>
