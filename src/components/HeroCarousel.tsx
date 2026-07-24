@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, ArrowRight, Calendar, MapPin, Trophy, Sparkl
 import { motion } from 'framer-motion';
 import BrandLogo from './BrandLogo';
 import { formatPKR } from '@/lib/format';
-import { createPalette } from '@/lib/palette';
+import { createPalette } from '@/infrastructure/palette';
 import Link from 'next/link';
 
 interface Slide {

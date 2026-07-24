@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import SlideCarousel from './SlideCarousel';
-import { createPalette } from '@/lib/palette';
+import { createPalette } from '@/infrastructure/palette';
 import { useCompetitions, Competition } from './useCompetitions';
 
 function timeParts(target: number, now: number) {

@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
 import SlideCarousel from './SlideCarousel';
-import { createPalette } from '@/lib/palette';
+import { createPalette } from '@/infrastructure/palette';
 import { useCompetitions, Competition } from './useCompetitions';
 
 function MapCard({ v }: { v: Competition }) {
