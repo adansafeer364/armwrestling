@@ -45,7 +45,7 @@ function TimerCard({ comp }: { comp: Competition }) {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-dark-card rounded-3xl p-5 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-800">
+    <div className="relative overflow-hidden bg-white dark:bg-dark-card rounded-3xl p-5 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-800 mt-20">
       <div
         className="absolute inset-x-0 top-0 h-1.5"
         style={{ background: accent }}
