@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import BrandLogo from './BrandLogo';
 import { formatPKR } from '@/lib/format';
 import { createPalette } from '@/lib/palette';
+import Link from 'next/link';
 
 interface Slide {
   _id: string;
@@ -33,17 +34,12 @@ const DEFAULT_SLIDES: Slide[] = [
 
 export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] }) {
   const [slidesState, setSlidesState] = useState<Slide[]>(propSlides && propSlides.length ? propSlides : []);
-  const [loaded, setLoaded] = useState(false);
   const slides = slidesState.length ? slidesState : DEFAULT_SLIDES;
   const count = slides.length;
   const [index, setIndex] = useState(0);
-  const [showSlideText, setShowSlideText] = useState(true);
 
-  useEffect(() => {
-    setShowSlideText(true);
-    const t = setTimeout(() => setShowSlideText(false), 5000);
-    return () => clearTimeout(t);
-  }, [index]);
+
+
 
   useEffect(() => {
     const id = setInterval(() => setIndex((s) => (s + 1) % count), 8000);
@@ -52,7 +48,6 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
 
   useEffect(() => {
     if (propSlides && propSlides.length) {
-      setLoaded(true);
       return;
     }
 
@@ -60,10 +55,11 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
       .then((r) => r.json())
       .then((d) => {
         const comps = d?.competitions || [];
-        if (comps && comps.length) setSlidesState(comps);
+        if (comps.length) {
+          setSlidesState(comps);
+        }
       })
-      .catch(() => {})
-      .finally(() => setLoaded(true));
+      .catch(() => { });
   }, [propSlides]);
 
   const prev = () => setIndex((i) => (i - 1 + count) % count);
@@ -93,82 +89,82 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
             key={s._id}
             className={`absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
-           <div className="absolute inset-0 overflow-hidden bg-black">
-  {/* Per-tournament ambient glow */}
-  <div className="absolute inset-0" style={{ background: `radial-gradient(circle at center, ${paletteForSlide.start} 0%, transparent 60%)`, opacity: 0.16 }} />
+            <div className="absolute inset-0 overflow-hidden bg-black">
+              {/* Per-tournament ambient glow */}
+              <div className="absolute inset-0" style={{ background: `radial-gradient(circle at center, ${paletteForSlide.start} 0%, transparent 60%)`, opacity: 0.16 }} />
 
-  {/* Cube 1 */}
-  <div
-    className="absolute left-[18%] top-[18%] w-64 h-64"
-    style={{
-      clipPath:
-        "polygon(30% 0%,100% 25%,70% 100%,0% 75%)",
-      background:
-        "linear-gradient(135deg,#0f172a,#000 60%)",
-      boxShadow:
-        "20px 20px 60px rgba(0,0,0,.9)"
-    }}
-  >
-    <div
-      className="absolute inset-0"
-      style={{
-        background:
-          `linear-gradient(135deg,transparent 55%,${paletteForSlide.start} 100%)`,
-        opacity:.85,
-        filter:"blur(8px)"
-      }}
-    />
-  </div>
+              {/* Cube 1 */}
+              <div
+                className="absolute left-[18%] top-[18%] w-64 h-64"
+                style={{
+                  clipPath:
+                    "polygon(30% 0%,100% 25%,70% 100%,0% 75%)",
+                  background:
+                    "linear-gradient(135deg,#0f172a,#000 60%)",
+                  boxShadow:
+                    "20px 20px 60px rgba(0,0,0,.9)"
+                }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      `linear-gradient(135deg,transparent 55%,${paletteForSlide.start} 100%)`,
+                    opacity: .85,
+                    filter: "blur(8px)"
+                  }}
+                />
+              </div>
 
-  {/* Cube 2 */}
-  <div
-    className="absolute right-[15%] top-[30%] w-72 h-72"
-    style={{
-      clipPath:
-        "polygon(20% 0%,100% 20%,80% 100%,0% 80%)",
-      background:
-        "linear-gradient(135deg,#111827,#000)",
-      boxShadow:
-        "30px 30px 70px rgba(0,0,0,.95)"
-    }}
-  >
-    <div
-      className="absolute inset-0"
-      style={{
-        background:
-          `linear-gradient(140deg,transparent 55%,${paletteForSlide.glow} 100%)`,
-        opacity:.8,
-        filter:"blur(10px)"
-      }}
-    />
-  </div>
+              {/* Cube 2 */}
+              <div
+                className="absolute right-[15%] top-[30%] w-72 h-72"
+                style={{
+                  clipPath:
+                    "polygon(20% 0%,100% 20%,80% 100%,0% 80%)",
+                  background:
+                    "linear-gradient(135deg,#111827,#000)",
+                  boxShadow:
+                    "30px 30px 70px rgba(0,0,0,.95)"
+                }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      `linear-gradient(140deg,transparent 55%,${paletteForSlide.glow} 100%)`,
+                    opacity: .8,
+                    filter: "blur(10px)"
+                  }}
+                />
+              </div>
 
-  {/* Cube 3 */}
-  <div
-    className="absolute left-[12%] bottom-[12%] w-80 h-80"
-    style={{
-      clipPath:
-        "polygon(25% 0%,100% 22%,75% 100%,0% 80%)",
-      background:
-        "linear-gradient(135deg,#0b1120,#000)",
-      boxShadow:
-        "25px 25px 80px rgba(0,0,0,.95)"
-    }}
-  >
-    <div
-      className="absolute inset-0"
-      style={{
-        background:
-          `linear-gradient(140deg,transparent 55%,${paletteForSlide.start} 100%)`,
-        opacity:.75,
-        filter:"blur(8px)"
-      }}
-    />
-  </div>
+              {/* Cube 3 */}
+              <div
+                className="absolute left-[12%] bottom-[12%] w-80 h-80"
+                style={{
+                  clipPath:
+                    "polygon(25% 0%,100% 22%,75% 100%,0% 80%)",
+                  background:
+                    "linear-gradient(135deg,#0b1120,#000)",
+                  boxShadow:
+                    "25px 25px 80px rgba(0,0,0,.95)"
+                }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      `linear-gradient(140deg,transparent 55%,${paletteForSlide.start} 100%)`,
+                    opacity: .75,
+                    filter: "blur(8px)"
+                  }}
+                />
+              </div>
 
-  {/* Soft per-tournament bloom */}
-  <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[180px]" style={{ backgroundColor: paletteForSlide.glow, opacity: 0.12 }} />
-</div>
+              {/* Soft per-tournament bloom */}
+              <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[180px]" style={{ backgroundColor: paletteForSlide.glow, opacity: 0.12 }} />
+            </div>
 
             <div className="relative z-10 flex min-h-[calc(100svh-6rem)] sm:min-h-[calc(100svh-5rem)] items-start sm:items-center justify-center px-4 py-6 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
               <div className="w-full max-w-6xl">
@@ -220,13 +216,13 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
                   </div>
 
                   <div className="mt-6 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                    <a
+                    <Link
                       href={`/register?tournament=${s._id}`}
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-100"
                     >
                       <span>Register Now</span>
                       <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </Link>
                     <div className="rounded-full border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white/80">
                       {s.weightCategory ? `Compete in ${s.weightCategory}` : 'Full event experience'}
                     </div>

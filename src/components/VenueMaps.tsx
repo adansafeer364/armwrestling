@@ -74,7 +74,11 @@ export default function VenueMaps() {
           </p>
         </div>
 
-        <SlideCarousel activeColor={(i) => createPalette(venues[i].title).start}>
+        <SlideCarousel
+          activeColor={(i) =>
+            venues[i] ? createPalette(venues[i].title).start : '#3b82f6'
+          }
+        >
           {venues.map((v) => (
             <MapCard key={v._id} v={v} />
           ))}

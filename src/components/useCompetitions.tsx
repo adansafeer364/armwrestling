@@ -14,16 +14,21 @@ export function useCompetitions() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
     fetch('/api/competitions')
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch competitions');
+        }
+        return res.json();
+      })
       .then((data) => {
         setCompetitions(data.competitions || []);
-        setIsLoading(false);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         setError(err);
         setCompetitions([]);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   }, []);
