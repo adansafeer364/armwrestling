@@ -87,7 +87,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
         return (
           <div
             key={s._id}
-            className={`absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            className={`my-20 absolute inset-0 transition-all duration-700 ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
             <div className="absolute inset-0 overflow-hidden bg-black">
               {/* Per-tournament ambient glow */}
@@ -166,7 +166,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
               <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[180px]" style={{ backgroundColor: paletteForSlide.glow, opacity: 0.12 }} />
             </div>
 
-            <div className="relative z-10 flex min-h-[calc(100svh-6rem)] sm:min-h-[calc(100svh-5rem)] items-start sm:items-center justify-center px-4 py-6 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
+            <div className="relative z-10 flex min-h-[calc(100svh-5rem)] items-center justify-center px-4 sm:px-6 lg:px-8">
               <div className="w-full max-w-6xl">
                 <div className="flex justify-center mb-6 sm:mb-8">
                   <BrandLogo animated showText className="justify-center" />
@@ -229,6 +229,7 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
                   </div>
                 </motion.div>
               </div>
+
             </div>
           </div>
         );
@@ -236,10 +237,10 @@ export default function HeroCarousel({ slides: propSlides }: { slides?: Slide[] 
 
       {count > 1 && (
         <>
-          <button onClick={prev} aria-label="Previous" className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
+          <button onClick={prev} aria-label="Previous" className="absolute left-4 top-3/5 z-20 -translate-y-1/2 md:rounded-full md:border md:border-white/20 md:bg-white/10 md:p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
             <ChevronLeft className="h-6 w-6" />
           </button>
-          <button onClick={next} aria-label="Next" className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
+          <button onClick={next} aria-label="Next" className="absolute right-4 top-3/5 z-20 -translate-y-1/2 md:rounded-full md:border md:border-white/20 md:bg-white/10 md:p-2 text-white backdrop-blur-sm transition hover:bg-white/20">
             <ChevronRight className="h-6 w-6" />
           </button>
 
